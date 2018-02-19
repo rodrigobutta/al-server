@@ -21,3 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Route::post('items', 'ItemController@store');
 
 Route::apiResource('items', 'ItemController');
+
+Route::apiResource('users', 'UserController');
