@@ -5,6 +5,11 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
+use Tymon\JWTAuth\JWT;
+use Tymon\JWTAuth\JWTGuard;
+use Illuminate\Contracts\Auth\UserProvider;
+use Illuminate\Http\Request;
+
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -25,6 +30,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        \Auth::extend('jwt', function ($app, $name, array $config) {
+
+            return new JwtGuard($app->make(JWT::class), \Auth::createUserProvider($config['provider']), $app->make(Request::class));
+        });
+
     }
 }
